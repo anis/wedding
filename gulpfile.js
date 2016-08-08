@@ -3,6 +3,7 @@
 // get dependencies
 var gulp = require('gulp'),
     path = require('path'),
+    args = require('yargs').argv,
     plugins = require('gulp-load-plugins')({
         'pattern': ['gulp-*', 'del', 'run-sequence'],
         'rename': {
@@ -42,8 +43,11 @@ gulp.task('copy-index', function () {
  */
 gulp.task('copy-js-vendor', function () {
     return gulp
-        .src(path.join(__dirname, 'node_modules', 'jquery', 'dist', 'jquery.min.js'))
-        .pipe(gulp.dest(path.join(config.dst, 'js', 'vendor')));
+        .src([
+            path.join(__dirname, 'node_modules', 'jquery', 'dist', 'jquery.min.js')
+        ])
+        .pipe(plugins.concat('vendor.js'))
+        .pipe(gulp.dest(path.join(config.dst, 'js')));
 });
 
 /**
@@ -60,24 +64,42 @@ gulp.task('sass', function () {
 /**
  * Injects all the proper dependencies into the index file
  */
-gulp.task('inject-all', [ 'copy-index', 'copy-js-vendor', 'sass' ], function () {
-    return gulp
-        .src(path.join(config.dst, 'index.php'))
-        .pipe(
+gulp.task('inject-all', [ 'copy-index', 'copy-js-vendor', 'sass', 'js' ], function () {
+    var dependencies = [
+        ['main',   path.join(config.dst, 'js', 'wedding.js')],
+        ['vendor', path.join(config.dst, 'js', 'vendor.js')],
+        ['style',  path.join(config.dst, 'css', 'style.css')]
+    ];
+
+    var stream = gulp.src(path.join(config.dst, 'index.php'));
+    for (var i = 0; i < dependencies.length; i += 1) {
+        stream = stream.pipe(
             plugins.inject(
-                gulp.src(
-                    [
-                        path.join(config.dst, 'js', 'vendor', 'jquery.min.js'),
-                        path.join(config.dst, 'css', 'style.css')
-                    ],
-                    { 'read': false }
-                ),
+                gulp.src(dependencies[i][1], { 'read': false }),
                 {
+                    'name': dependencies[i][0],
                     'relative': true
                 }
             )
-        )
-        .pipe(gulp.dest(config.dst));
+        );
+    }
+
+    return stream.pipe(gulp.dest(config.dst));
+});
+
+/**
+ * Compiles the JS code into a single minified file
+ */
+gulp.task('js', function () {
+    var stream = gulp
+        .src(path.join(config.src, 'js', '**/*.js'))
+        .pipe(plugins.concat('wedding.js'));
+
+    if (args.debug === undefined) {
+        stream = stream.pipe(plugins.uglifyjs())
+    }
+
+    return stream.pipe(gulp.dest(path.join(config.dst, 'js')));
 });
 
 /**
@@ -86,7 +108,7 @@ gulp.task('inject-all', [ 'copy-index', 'copy-js-vendor', 'sass' ], function () 
 gulp.task('build', function (callback) {
     plugins.runSequence(
         'clean',
-        ['copy-index', 'copy-js-vendor', 'sass', 'inject-all'],
+        ['copy-index', 'copy-js-vendor', 'sass', 'js', 'inject-all'],
         callback
     );
 });

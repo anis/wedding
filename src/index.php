@@ -4,10 +4,13 @@
         <title>Anis &amp; Flo, Octobre 2016</title>
         <meta name="robots" content="noindex" />
 
-        <!-- inject:css -->
+        <!-- style:css -->
         <!-- endinject -->
 
-        <!-- inject:js -->
+        <!-- vendor:js -->
+        <!-- endinject -->
+
+        <!-- main:js -->
         <!-- endinject -->
     </head>
 
