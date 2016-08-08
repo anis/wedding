@@ -6,6 +6,9 @@
 
         <!-- inject:css -->
         <!-- endinject -->
+
+        <!-- inject:js -->
+        <!-- endinject -->
     </head>
 
     <body></body>
