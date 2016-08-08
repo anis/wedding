@@ -3,6 +3,7 @@
     <head>
         <title>Anis &amp; Flo, Octobre 2016</title>
         <meta name="robots" content="noindex" />
+        <link rel="icon" href="img/favicon.gif" type="image/gif">
 
         <!-- wedding:css -->
         <!-- endinject -->
