@@ -55,7 +55,7 @@ gulp.task('copy-js-vendor', function () {
  */
 gulp.task('sass', function () {
     return gulp
-        .src(path.join(config.src, 'css', 'style.scss'))
+        .src(path.join(config.src, 'css', 'wedding.scss'))
         .pipe(plugins.sass())
         .pipe(plugins.cleanCSS())
         .pipe(gulp.dest(path.join(config.dst, 'css')));
@@ -66,9 +66,9 @@ gulp.task('sass', function () {
  */
 gulp.task('inject-all', [ 'copy-index', 'copy-js-vendor', 'sass', 'js' ], function () {
     var dependencies = [
-        ['main',   path.join(config.dst, 'js', 'wedding.js')],
-        ['vendor', path.join(config.dst, 'js', 'vendor.js')],
-        ['style',  path.join(config.dst, 'css', 'style.css')]
+        ['wedding', path.join(config.dst, 'js', 'wedding.js')],
+        ['vendor',  path.join(config.dst, 'js', 'vendor.js')],
+        ['wedding', path.join(config.dst, 'css', 'wedding.css')]
     ];
 
     var stream = gulp.src(path.join(config.dst, 'index.php'));
