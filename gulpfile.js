@@ -4,8 +4,9 @@
 var gulp = require('gulp'),
     path = require('path'),
     plugins = require('gulp-load-plugins')({
-        'pattern': ['gulp-*'],
+        'pattern': ['gulp-*', 'del', 'run-sequence'],
         'rename': {
+            'run-sequence': 'runSequence',
             'gulp-clean-css': 'cleanCSS'
         }
     });
@@ -21,9 +22,16 @@ var config = {
  **********************************************************************************************************************/
 
 /**
- * Copies important files to the build folder
+ * Empties the destination folder
  */
-gulp.task('copy', function () {
+gulp.task('clean', function () {
+    return plugins.del([ config.dst ]);
+});
+
+/**
+ * Copies the index file from the source to the destination folder
+ */
+gulp.task('copy-index', function () {
     return gulp
         .src(path.join(config.src, 'index.php'))
         .pipe(gulp.dest(config.dst));
@@ -41,9 +49,9 @@ gulp.task('sass', function () {
 });
 
 /**
- * Injects the proper dependencies into the index file
+ * Injects CSS dependencies into the index file
  */
-gulp.task('inject', [ 'copy' ], function () {
+gulp.task('inject-css', [ 'copy-index', 'sass' ], function () {
     return gulp
         .src(path.join(config.dst, 'index.php'))
         .pipe(
@@ -60,4 +68,10 @@ gulp.task('inject', [ 'copy' ], function () {
 /**
  * Main task
  */
-gulp.task('build', [ 'copy', 'inject', 'sass' ]);
+gulp.task('build', function (callback) {
+    plugins.runSequence(
+        'clean',
+        ['copy-index', 'sass', 'inject-css'],
+        callback
+    );
+});
