@@ -5,9 +5,10 @@ var gulp = require('gulp'),
     path = require('path'),
     args = require('yargs').argv,
     plugins = require('gulp-load-plugins')({
-        'pattern': ['gulp-*', 'del', 'run-sequence'],
+        'pattern': ['gulp-*', 'del', 'run-sequence', 'merge-stream'],
         'rename': {
             'run-sequence': 'runSequence',
+            'merge-stream': 'merge',
             'gulp-clean-css': 'cleanCSS'
         }
     });
@@ -48,6 +49,26 @@ gulp.task('copy-js-vendor', function () {
         ])
         .pipe(plugins.concat('vendor.js'))
         .pipe(gulp.dest(path.join(config.dst, 'js')));
+});
+
+/**
+ * Copies images and fonts to the destination folder
+ */
+gulp.task('copy-assets', function () {
+    var folders = [ 'img', 'fonts'],
+        streams = [];
+
+    for (var i = 0; i < folders.length; i += 1) {
+        streams.push(
+            gulp
+                .src([
+                    path.join(config.src, folders[i], '**/*')
+                ])
+                .pipe(gulp.dest(path.join(config.dst, folders[i])))
+        );
+    }
+
+    return plugins.merge(streams);
 });
 
 /**
@@ -108,7 +129,7 @@ gulp.task('js', function () {
 gulp.task('build', function (callback) {
     plugins.runSequence(
         'clean',
-        ['copy-index', 'copy-js-vendor', 'sass', 'js', 'inject-all'],
+        ['copy-index', 'copy-js-vendor', 'copy-assets', 'sass', 'js', 'inject-all'],
         callback
     );
 });
