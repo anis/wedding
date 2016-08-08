@@ -14,3 +14,7 @@ The following steps will get you to a fully ready-to-use project:
 * run `npm install`
 
 Well guess what? That's it! You can now run the file `public/index.php` and enjoy the wedding planning.
+
+# Development
+If you want to contribute, or tweak the code a little bit, please note a "debug" mode is available for the JavaScript.
+Simply run `gulp build --debug` to avoid uglifying the JavaScript code.
