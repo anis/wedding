@@ -28,7 +28,14 @@ $(window).resize(backgroundResize);
 $(window).focus(backgroundResize);
 backgroundResize();
 
-// make the content appear after the document finished loading
-window.addEventListener('load', function () {
-    document.getElementById('content').style.opacity = 1;
+// wait for the background to be loaded before showing the content
+var img = new Image();
+img.addEventListener('load', function () {
+    document.getElementById('loader').style.opacity = 0;
+
+    setTimeout(function () {
+        document.getElementById('content').style.opacity = 1;
+        setTimeout(showCountdown, 1500);
+    }, 1500);
 });
+img.src = 'img/bg.jpg';

@@ -7,7 +7,7 @@
   text-align: center;
   color: #fff;
   opacity: 0;
-  @include transition(opacity 1.5s);
+  @include transition(opacity 2s);
   text-shadow: 0 0 9px rgba(7, 24, 74, 0.2);
 }
 

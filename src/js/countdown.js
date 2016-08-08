@@ -71,10 +71,10 @@ window.addEventListener('load', function () {
         containers.seconds.innerHTML = seconds < 10 ? '0' + seconds : seconds;
     }
 
-    setInterval(refresh, 1000);
-    refresh();
+    window.showCountdown = function () {
+        refresh();
+        setInterval(refresh, 1000);
 
-    setTimeout(function () {
         document.getElementById('countdown').style.opacity = 1;
-    }, 1500);
+    };
 });

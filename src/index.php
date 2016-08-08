@@ -10,6 +10,8 @@
     </head>
 
     <body>
+        <div class="loader" id="loader"></div>
+
         <div class="background" id="background" data-img-width="1920" data-img-height="1080">
             <div class="content" id="content">
                 <h1 class="content-title">Anis &amp; Flo</h1>
