@@ -1,0 +1,41 @@
+.content {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  margin-left: -255px;
+  width: 510px;
+  text-align: center;
+  color: #fff;
+  opacity: 0;
+  @include transition(opacity 1.5s);
+  text-shadow: 0 0 9px rgba(7, 24, 74, 0.2);
+}
+
+.content-title {
+  margin: 0;
+  padding: 0;
+  font-size: 150px;
+  font-weight: normal;
+  font-family: 'kalc', 'Helvetica';
+}
+
+.content-subtitle {
+  margin: 6px 0;
+  padding: 0;
+  font-size: 21px;
+  font-family: serif;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+}
+
+.content-strike {
+  display: inline-block;
+  margin: 6px 10px;
+  width: 220px;
+  border-top: 1px solid #fff;
+}
+
+.content-heart {
+  font-size: 25px;
+  font-style: normal;
+}
