@@ -19,6 +19,19 @@
             </div>
         </div>
 
+        <div class="countdown" id="countdown"><!--
+            --><p class="countdown-item" id="months"></p><!--
+            --><p class="countdown-item" id="days"></p><!--
+            --><p class="countdown-item" id="hours"></p><!--
+            --><p class="countdown-item" id="minutes"></p><!--
+            --><p class="countdown-item" id="seconds"></p><!--
+        --></div>
+
+        <script type="text/javascript">
+            var rel = Math.round(Date.now() / 1000),
+                abs = <?php echo time(); ?>;
+        </script>
+
         <!-- vendor:js -->
         <!-- endinject -->
 

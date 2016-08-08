@@ -1,0 +1,57 @@
+.countdown {
+  position: absolute;
+  bottom: 75px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  opacity: 0;
+  @include transition(opacity 1.5s);
+}
+
+.countdown-item {
+  position: relative;
+  margin: 0px 25px;
+  padding-top: 20px;
+  display: inline-block;
+  width: 90px;
+  height: 95px;
+  color: #6f5b52;
+  font-size: 40px;
+  font-family: Charcoal, sans-serif;
+  letter-spacing: -2px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 10px rgba(7, 24, 74, 0.5);
+}
+
+.countdown-item:after {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 20px;
+  font-size: 14px;
+  color: #e07a82;
+  letter-spacing: -0.5px;
+  font-weight: normal;
+  font-family: serif;
+  text-transform: uppercase;
+}
+
+#months:after {
+  content: 'mois';
+}
+
+#days:after {
+  content: 'jours';
+}
+
+#hours:after {
+  content: 'heures';
+}
+
+#minutes:after {
+  content: 'minutes';
+}
+
+#seconds:after {
+  content: 'secondes';
+}
